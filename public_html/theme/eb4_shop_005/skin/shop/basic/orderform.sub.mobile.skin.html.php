@@ -273,7 +273,7 @@ set_session('ss_personalpay_hash', '');
 
     <div class="order-member-area">
         <?php /* ---------- 주문하시는 분 입력 시작 ---------- */ ?>
-        <div class="sod-frm-orderer">
+        <div class="sod-frm-orderer" style="display:none">
             <div class="headline-short"><h4><strong>주문하시는 분</strong></h4></div>
             <div class="order-table">
                 <table>
@@ -377,7 +377,7 @@ set_session('ss_personalpay_hash', '');
         <?php /* ---------- 주문하시는 분 입력 끝 ---------- */ ?>
 
         <?php /* ---------- 받으시는 분 입력 시작 ---------- */ ?>
-        <div class="sod-frm-taker">
+        <div class="sod-frm-taker" style="display:none">
             <div class="headline-short"><h4><strong>받으시는 분</strong></h4></div>
             <div class="order-table">
                 <table>
@@ -1459,6 +1459,7 @@ function orderfield_check(f)
         if( (f.od_pwd.value.length<3) || (f.od_pwd.value.search(/([^A-Za-z0-9]+)/)!=-1) )
             error_field(f.od_pwd, "회원이 아니신 경우 주문서 조회시 필요한 비밀번호를 3자리 이상 입력해 주십시오.");
     }
+    /*
     check_field(f.od_tel, "주문하시는 분 전화번호를 입력하십시오.");
     check_field(f.od_addr1, "주소검색을 이용하여 주문하시는 분 주소를 입력하십시오.");
     //check_field(f.od_addr2, " 주문하시는 분의 상세주소를 입력하십시오.");
@@ -1488,6 +1489,7 @@ function orderfield_check(f)
             check_field(f.od_deposit_name, "입금자명을 입력하세요.");
         }
     }
+    */
 
     // 배송비를 받지 않거나 더 받는 경우 아래식에 + 또는 - 로 대입
     f.od_send_cost.value = parseInt(f.od_send_cost.value);

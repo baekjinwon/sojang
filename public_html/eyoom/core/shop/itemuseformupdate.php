@@ -1,21 +1,24 @@
 <?php
-include_once('./_common.php');
+/**
+ * core file : /eyoom/core/shop/itemuseformupdate.php
+ */
+if (!defined('_EYOOM_')) exit;
 
 if (!$is_member) {
-    alert_close("사용후기는 회원만 작성이 가능합니다.");
+    alert_close("사용후기는 로그인후 작성이 가능합니다.");
+    echo "<script>location.href='/bbs/login.php'</script>";
 }
 
 $it_id       = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
-$is_subject  = isset($_POST['is_subject']) ? trim($_POST['is_subject']) : '';
-$is_content  = isset($_POST['is_content']) ? trim($_POST['is_content']) : '';
+$od_id       = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
+$is_subject  = trim($_POST['is_subject']);
+$is_content  = trim($_POST['is_content']);
 $is_content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $is_content);
-$is_name     = isset($_POST['is_name']) ? trim($_POST['is_name']) : '';
-$is_password = isset($_POST['is_password']) ? trim($_POST['is_password']) : '';
-$is_score    = isset($_POST['is_score']) ? (int) $_POST['is_score'] : 0;
-$is_score    = ($is_score > 5) ? 0 : $is_score;
+$is_name     = trim($_POST['is_name']);
+$is_password = trim($_POST['is_password']);
+$is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
 $get_editor_img_mode = $config['cf_editor'] ? false : true;
-$is_id       = isset($_REQUEST['is_id']) ? (int) $_REQUEST['is_id'] : 0;
-$is_mobile_shop = isset($_REQUEST['is_mobile_shop']) ? (int) $_REQUEST['is_mobile_shop'] : 0;
+$is_id       = (int) trim($_REQUEST['is_id']);
 
 // 사용후기 작성 설정에 따른 체크
 check_itemuse_write($it_id, $member['mb_id']);
@@ -31,7 +34,7 @@ if ($w == "" || $w == "u") {
 if($is_mobile_shop)
     $url = './iteminfo.php?it_id='.$it_id.'&info=use';
 else
-    $url = shop_item_url($it_id, "_=".get_token()."#sit_use");
+    $url = shop_item_url($it_id)."?_=".get_token()."#sit_use";
 
 if ($w == "")
 {
@@ -48,6 +51,7 @@ if ($w == "")
 
     $sql = "insert {$g5['g5_shop_item_use_table']}
                set it_id = '$it_id',
+               od_id = '$od_id',
                    mb_id = '{$member['mb_id']}',
                    is_score = '$is_score',
                    is_name = '$is_name',
@@ -58,13 +62,26 @@ if ($w == "")
                    is_ip = '{$_SERVER['REMOTE_ADDR']}' ";
     if (!$default['de_item_use_use'])
         $sql .= ", is_confirm = '1' ";
-
     sql_query($sql);
 
     if ($default['de_item_use_use']) {
         $alert_msg = "평가하신 글은 관리자가 확인한 후에 출력됩니다.";
     }  else {
         $alert_msg = "사용후기가 등록 되었습니다.";
+        $sqld = "SELECT * FROM g5_config";
+        $rowd = sql_fetch($sqld);
+        
+        if(strpos($is_content , "<img")){
+            if($rowd['cf_2'] != ""){
+                insert_point($member['mb_id'], $rowd['cf_2'], "구매후기 등록 포인트가 지급되었습니다.", "@review", $member['mb_id'], $od_id);
+            }
+            
+        }else{
+            if($rowd['cf_1'] != ""){
+                insert_point($member['mb_id'], $rowd['cf_1'], "구매후기 등록 포인트가 지급되었습니다.", "@review", $member['mb_id'], $od_id);
+            }
+            
+        }
     }
 }
 else if ($w == "u")
@@ -100,7 +117,7 @@ else if ($w == "d")
 
     $imgs = get_editor_image($row['is_content'], $get_editor_img_mode);
 
-    for($i=0;$i<count($imgs[1]);$i++) {
+    for($i=0;$i<count((array)$imgs[1]);$i++) {
         $p = parse_url($imgs[1][$i]);
         if(strpos($p['path'], "/data/") != 0)
             $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
@@ -131,5 +148,6 @@ if( ! $default['de_item_use_use'] ){
 
 if($w == 'd')
     alert($alert_msg, $url);
-else
-    alert_opener($alert_msg, $url);
+else {
+    echo "<script>alert('".$alert_msg."'); window.parent.close_modal_and_reload();</script>";
+}

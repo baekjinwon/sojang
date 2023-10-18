@@ -724,6 +724,8 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
         $array_email[] = $wr['wr_email'];
     }
 
+    print_r2($array_email);
+    
     // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
     if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
         $array_email[] = $wr['wr_email'];
