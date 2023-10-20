@@ -14,8 +14,10 @@ if($co_seo_title){
     $co = get_content_by_field($g5['content_table'], 'content', 'co_seo_title', generate_seo_title($co_seo_title));
     $co_id = isset($co['co_id']) ? $co['co_id'] : 0;
 } else {
-    $co = get_content_db($co_id);
+    //$co = get_content_db($co_id);
+    $co = sql_fetch("select * from g5_content where co_id='$co_id'");
 }
+
 
 if( ! (isset($co['co_seo_title']) && $co['co_seo_title']) && isset($co['co_id']) && $co['co_id'] ){
     seo_title_update($g5['content_table'], $co['co_id'], 'content');

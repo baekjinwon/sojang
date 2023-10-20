@@ -180,6 +180,15 @@ if (!defined('_EYOOM_')) exit;
 .doc_menu3{ background-image: url(/img/box_3.png); }
 .doc_menu4 { background-image: url(/img/box_4.png); }
 
+.cate_susik_1 {
+    height:100%;
+    position: relative;
+    background-image: url(/img/box_1.png);
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: cover;    
+}
+
 @media screen and (max-width: 992px){
     .doc_menu1 { width: 60%; justify-content: space-between; }
     .doc_txt2 { text-align: left;  }
@@ -194,7 +203,7 @@ if (!defined('_EYOOM_')) exit;
 <?php } ?>
     <div class="col-md-4 menu-1" style="height:411px;margin-top:15px"><!-- 클래스 추가 0504 -->
         <!-- 수정사항 - 스타일 추가 -->
-        <div style="height:100%;position: relative;background-image: url(/img/box_1.png);background-position: left;background-repeat: no-repeat;background-size: cover;overflow;">
+        <div class='cate_susik_1'>
         	<div class="icon-img">
         		  <img src="img/" alt="">
         	</div>

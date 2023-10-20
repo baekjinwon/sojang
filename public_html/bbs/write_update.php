@@ -723,8 +723,6 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
         $array_email[] = $wr['wr_email'];
     }
-
-    print_r2($array_email);
     
     // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
     if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
@@ -733,6 +731,10 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     // 중복된 메일 주소는 제거
     $unique_email = array_unique($array_email);
     $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
+
+    // $subject = "제목테스트입니다.";
+    // $content= "test입니다.";
+    // mailer("메일테스트", "yongerang@naver.com", "newsccdream@naver.com", $subject, $content, 1);
 
     for ($i=0; $i<count($unique_email); $i++) {
         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
