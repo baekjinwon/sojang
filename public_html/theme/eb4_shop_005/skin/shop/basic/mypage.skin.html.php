@@ -14,7 +14,7 @@ if (!defined('_EYOOM_')) exit;
 .shop-mypage .panel-heading {background:#f8f8f8}
 .shop-mypage .panel-body dt {float:left;width:15%;margin:3px 0;font-weight:bold}
 .shop-mypage .panel-body dd {float:left;width:35%;margin:3px 0}
-.shop-mypage .mypage-wishlist-container {margin-left:-10px;margin-right:-10px}
+.shop-mypage .mypage-wishlist-container {margin-left:-10px;margin-right:-10px; display:flex; flex-wrap:wrap;  }
 .shop-mypage .mypage-wishlist-box {position:relative;width:25%}
 .shop-mypage .mypage-wishlist-box-pd {padding:10px}
 .shop-mypage .mypage-wishlist-box-in {position:relative;border:1px solid #dadada;padding:10px;background:#fff}
@@ -25,6 +25,8 @@ if (!defined('_EYOOM_')) exit;
 <?php if ($eyoom['is_responsive'] == '1' || G5_IS_MOBILE) { // 반응형 또는 모바일일때 ?>
 @media (max-width:991px) {
     .shop-mypage-wishlist .mypage-wishlist-box {width:33.33333%}
+    .shop-mypage .mypage-wishlist-box-in { min-height:260px;  }
+
 }
 @media (max-width:767px) {
     .shop-mypage .panel-body dt {width:30%}
@@ -441,13 +443,13 @@ $(window).load(function(){
 });
 
 $(document).ready(function(){
-    var $container = $('.mypage-wishlist-container');
-    $container.imagesLoaded(function() {
-        $container.masonry({
-            columnWidth: '.mypage-wishlist-box',
-            itemSelector: '.mypage-wishlist-box'
-        });
-    });
+    // var $container = $('.mypage-wishlist-container');
+    // $container.imagesLoaded(function() {
+    //     $container.masonry({
+    //         columnWidth: '.mypage-wishlist-box',
+    //         itemSelector: '.mypage-wishlist-box'
+    //     });
+    // });
 });
 
 $(function() {

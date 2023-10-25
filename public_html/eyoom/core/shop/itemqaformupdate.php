@@ -131,5 +131,6 @@ else if ($w == "d")
 if($w == 'd')
     alert($alert_msg, $url);
 else
-    echo "<script>alert('".$alert_msg."'); window.parent.close_modal_and_reload();</script>";
+    alert($alert_msg, $url);
+    //echo "<script>alert('".$alert_msg."'); window.parent.close_modal_and_reload();</script>";
 ?>

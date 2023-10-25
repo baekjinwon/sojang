@@ -96,8 +96,8 @@ if (!defined('_EYOOM_')) exit;
 
 @media screen and (max-width: 640px){
     .menu-1{height: 130px !important;}
-    .menu-1-txt{position: inherit !important;transform: translateY(0%) !important;top: 0 !important;right: 0 !important;margin-right: 40px;}
-    .flex-c>div{height: 27.59px !important}
+    .menu-1-txt{transform: translateY(0%) !important;}
+    .flex-c>div{height: 27.59px !important; }
     .menu-1>div{background-color: #fd5e5a;display: flex;align-items: center;justify-content: right;width: 100%;}
     .menu-3{background-position: 5% 50% !important}
     .menu-right .row:nth-of-type(1)>div .menu-3{background-color: #c557d6;}
@@ -113,10 +113,10 @@ if (!defined('_EYOOM_')) exit;
     .m-user-e{background-position: center !important;background-size: 300% !important;}
 }
 @media screen and (max-width: 480px){
-	.flex-c{display: flex;flex-direction: column;align-items: flex-end;margin-right: 2vw;}
+	.flex-c{display: flex;flex-direction: column;align-items: flex-start; padding-left:2vw;margin-right: 0vw;}
 		.flex-c2{margin-right: 2vw}
     .menu-1{height: 80px !important;}
-    .menu-1-txt{position: inherit !important;transform: translateY(0%) !important;top: 0 !important;right: 20px !important;margin-right: 40px;}
+    .menu-1-txt{transform: translateY(0%) !important;}
     .flex-c>div{height: 27.59px !important}
     .menu-1>div{background-color: #fd5e5a;width: 100%;}
     .menu-1-txt{display: flex;justify-content: center;align-items: center;;margin-right: 0 !important;}
@@ -160,8 +160,10 @@ if (!defined('_EYOOM_')) exit;
 
 }
 
-.doc_menu1 { position: absolute;right: 40px;top: 50%;transform: translateY(-50%);  }
+.doc_menu1 { transform: translateY(-50%);  }
 .doc_txt1 { font-weight: bold; font-size: 40px; margin-bottom: 0; color: #fff; }
+.doc_menu1_txt { top: 72px; position: absolute; right: 60px; }
+.menu-1-btn { position: absolute; top: 236px; right: 63px;  }
 .doc_txt2 { text-align: right; font-size:40px; margin-bottom: 40px; color: #fff; }
 .btn_doc1 {  float: right; margin-top:0px; background-color: #5b0fd1; }
 .doc_box {
@@ -182,7 +184,6 @@ if (!defined('_EYOOM_')) exit;
 
 .cate_susik_1 {
     height:100%;
-    position: relative;
     background-image: url(/img/box_1.png);
     background-position: left;
     background-repeat: no-repeat;
@@ -190,9 +191,26 @@ if (!defined('_EYOOM_')) exit;
 }
 
 @media screen and (max-width: 992px){
-    .doc_menu1 { width: 60%; justify-content: space-between; }
+    .doc_menu1 { width: 100%; justify-content: space-between; }
+    .doc_menu2 { position:relative;  }
+    .flex-c { position:absolute; left:0px;  }
+    .btn-go-category { position:absolute; right:15px;  }
     .doc_txt2 { text-align: left;  }
     .doc_flex { width: 49%;  }
+    .menu-1 { position:relative;  }
+    .cate_susik_1 {
+        background-image: url(/img/box_1_m.jpg);
+        background-position: -11px;        
+    }
+    .menu-3-txt { position:absolute; left:28vw;   }
+    .doc_menu1_txt { top:initial; right:initial; left: 28vw;  }
+    .menu-1-btn { top:0px; right:15px;  }
+}
+
+@media (max-width: 767px){
+    .ebgoods-gallery-wrap .ebgoods-gallery-tabs {
+        flex-wrap: wrap;
+    }
 }
 </style>
 <!-- 법률서식 -->
@@ -208,7 +226,7 @@ if (!defined('_EYOOM_')) exit;
         		  <img src="img/" alt="">
         	</div>
             <div class="menu-1-txt doc_menu1"><!-- 클래스 추가 0504 -->
-            	<div class="flex-c flex-c2">
+            	<div class="flex-c flex-c2 doc_menu1_txt">
                     <p class='doc_txt1'>민사집행보전처분</p>
                     <p class='doc_txt2'>법률서식</p>
             	</div>
@@ -223,7 +241,7 @@ if (!defined('_EYOOM_')) exit;
 		<div class="row" style="padding:5px">		
 		    <div style="height:130px">
 		        <div class="menu-3 doc_box doc_menu2">
-		            <div class="flex-c doc_flex">
+		            <div class="flex-c doc_flex menu-3-txt">
                         <l style="font-size:40px;font-weight:bold">민사소송</l>
                         <l style="font-size:40px;margin-right: 40px;">법률서식</l> 
                     </div>
@@ -236,7 +254,7 @@ if (!defined('_EYOOM_')) exit;
 		<div class="row" style="padding:5px">
 		    <div style="height:130px">
 		        <div class="menu-3 doc_box doc_menu3">
-                    <div class="flex-c doc_flex">
+                    <div class="flex-c doc_flex menu-3-txt">
                         <l style="font-size:40px;font-weight:bold">가사소송</l> 
                         <l style="font-size:40px;margin-right: 40px;">법률서식</l>
                     </div>
@@ -249,7 +267,7 @@ if (!defined('_EYOOM_')) exit;
 		<div class="row" style="padding:5px">
 		    <div style="height:130px">
 		        <div class="menu-3 doc_box doc_menu4">
-                    <div class="flex-c doc_flex">
+                    <div class="flex-c doc_flex menu-3-txt">
                         <l style="font-size:40px;font-weight:bold">형사소송</l> 
                         <l style="font-size:40px;margin-right: 40px;">법률서식</l>
                     </div>
@@ -412,20 +430,25 @@ if (!defined('_EYOOM_')) exit;
     	.index_left .title{width: 100% !important;display: flex !important;align-items: center;}
     	    	.index_left .title>h2{width: 100px}
     	.index_left .title::after{display: block;content: '';height: 1px;background-color: #000;width: calc(100% - 100px)}
+        .qna-view { position:absolute; top: -78px;right: 32px; }
     	@media screen and (max-width: 993px){
     		.qna{display: block !important}
 			.index_right{width: 100% !important;display: none !important;}
 			.index_left{width: 100% !important;padding: 0 !important;margin-bottom: 30px;}
 			.index_left li{margin: 0 !important}
 			.img_box{width: 50% !important;height: auto !important;}
+
+            .qna-view { top: -13vw; right: 0vw; }
 		}
-		    	@media screen and (max-width: 640px){
- .index_left li .qna_title{font-size: 12px !important}
- .index_left .date{font-size: 10px !important;margin: 0;}
- .qna_i{font-size: 10px !important;margin: 0 !important;}
-		}
-		    	@media screen and (max-width: 350px){
-.index_left li{margin: 0 !important}
+
+        @media screen and (max-width: 640px){
+            .index_left li .qna_title{font-size: 12px !important}
+            .index_left .date{font-size: 10px !important;margin: 0;}
+            .qna_i{font-size: 10px !important;margin: 0 !important;}
+        }
+
+        @media screen and (max-width: 350px){
+            .index_left li{margin: 0 !important}
 		}
     </style>
     <link rel="stylesheet" href="/css/sojang_index.css">
@@ -437,7 +460,7 @@ if (!defined('_EYOOM_')) exit;
                 <div class="qna" style="width: 100%;height: auto">
 
                     <div class="index_left" style="position:relative;width: calc(100% - 398px);padding-right: 30px">
-                        <div class="qna-view" style='position:absolute; top: -78px;right: 32px;'>
+                        <div class="qna-view">
                             <div class="text-center">
                                 <div class="btn-more btn-go-category" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/bbs/qalist.php" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;">전체보기</a></div>
                             </div>

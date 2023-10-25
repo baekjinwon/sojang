@@ -1,6 +1,6 @@
 <?php
 if (!defined('_EYOOM_')) exit;
-add_stylesheet('<link rel="stylesheet" href="'.EYOOM_THEME_URL.'/plugins/slick/slick.min.css" type="text/css" media="screen">',0);
+add_stylesheet('<link rel="stylesheet" href="'.EYOOM_THEME_URL.'/plugins/slick/slick.min.css?ver=2" type="text/css" media="screen">',0);
 ?>
 
 <?php /* eb슬라이더 편집 버튼 */ ?>
