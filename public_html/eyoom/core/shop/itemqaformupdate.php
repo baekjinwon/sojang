@@ -25,10 +25,12 @@ if ($w == "" || $w == "u") {
     if (!$iq_question) alert("질문을 입력하여 주십시오.");
 }
 
-if($is_mobile_shop)
-    $url = './iteminfo.php?it_id='.$it_id.'&info=qa';
+if($is_mobile_shop){
+    //$url = './iteminfo.php?it_id='.$it_id.'&info=qa';
+    $url = shop_item_url($it_id)."#sit_qa";
+}
 else
-    $url = shop_item_url($it_id)."?_=".get_token()."#sit_qa";
+    $url = shop_item_url($it_id)."#sit_qa";
 
 if ($w == "")
 {

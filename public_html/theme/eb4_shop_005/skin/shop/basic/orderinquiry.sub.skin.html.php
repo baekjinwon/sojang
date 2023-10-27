@@ -3,6 +3,7 @@
  * skin file : /theme/THEME_NAME/skin/shop/basic/orderinquiry.sub.skin.html.php
  */
 if (!defined('_EYOOM_')) exit;
+
 ?>
 
 <style>
@@ -71,8 +72,7 @@ if (!defined('_EYOOM_')) exit;
                             echo $firstDate; 
                         }
                         
-                    ?>
-                    
+                    ?>                    
                     </td>
                     <td class="td-border text-right"><?php echo display_price($list[$i]['od_price']); ?></td>
                     <td class="text-right"><?php echo display_price($list[$i]['od_receipt_price']); ?></td>
@@ -83,20 +83,24 @@ if (!defined('_EYOOM_')) exit;
                         if($ct_item_result['it_id'] != "1659019167" && $ct_item_result['it_id'] != "1672642574" && $ct_item_result['it_id'] != "1672642610" && $ct_item_result['it_id'] != "1672642648"){
 
                             if($list[$i]['od_status'] == "배송완료" || $list[$i]['od_status'] == "완료") {
-
+                                
                                 if(4 > $days){
+                                    
                                     echo "<a style='color:white' class='btn-e btn-e-lg btn-e-dark' href='".$list[$i]['href']."'>다운받기</a>";
                                 }else {
-                                    echo "기간초과";
+                                    if($list[$i]['od_status'] == "취소") echo "주문취소";
+                                    else echo "기간초과";
                                 }
                             }else{
-                                echo "<span class='state-label state-0".$list[$i]['od_status_number']."'>".$list[$i]['od_status']."</span>";
-                            }
+                                
+                                if($list[$i]['od_status'] == "취소") $od_status_txt = "주문취소";
+                                else $od_status_txt = $list[$i]['od_status'];
 
-                            if($list[$i]['od_status'] == "취소"){
-                                echo "(주문취소)";
+                                echo "<span class='state-label state-0".$list[$i]['od_status_number']."'>".$od_status_txt."</span>";
                             }
+                            
                         }else{
+                            
                             echo "<span class='state-label state-0".$list[$i]['od_status_number']."'>";
 
                             if($list[$i]['od_status'] == "배송완료" || $list[$i]['od_status'] == "완료"){

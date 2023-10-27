@@ -27,7 +27,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
         <div class="headline-btn"><!-- 박찬영 수정-->
             <a href="<?php echo G5_ADMIN_URL; ?>/?dir=shop&pid=itemform" class="btn-e btn-e-red btn-e-lg"><i class="fas fa-plus"></i> 서식등록</a>
 
-                <a href="<?php echo G5_ADMIN_URL; ?>/?dir=shop&pid=itemexcel&wmode=1" onclick="return eb_modal(this.href);return false;" class="btn-e btn-e-teal btn-e-lg"><i class="fas fa-plus"></i> 서식일괄등록</a>
+                <a href="<?php echo G5_ADMIN_URL; ?>/?dir=shop&pid=itemexcel&wmode=1" onclick="return eb_modal(this.href);return false;" class="btn-e btn-e-teal btn-e-lg"><i class="fas fa-plus"></i> 대량 자료등록</a>
             
         </div>
     </div>

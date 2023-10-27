@@ -31,10 +31,12 @@ if ($w == "" || $w == "u") {
     if (!$is_content) alert("내용을 입력하여 주십시오.");
 }
 
-if($is_mobile_shop)
-    $url = './iteminfo.php?it_id='.$it_id.'&info=use';
+if($is_mobile_shop){
+    //$url = './iteminfo.php?it_id='.$it_id.'&info=use';
+    $url = shop_item_url($it_id)."#sit_use";
+}
 else
-    $url = shop_item_url($it_id)."?_=".get_token()."#sit_use";
+    $url = shop_item_url($it_id)."#sit_use";
 
 if ($w == "")
 {
