@@ -33,7 +33,10 @@ if (!defined('_EYOOM_')) exit;
     .shop-category-title h2 {display:block;float:none;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid #333}
     .shop-category-title p {display:block;float:none;;padding:0}
     .section {margin-bottom:30px;padding:0}
+    .section-03 { position:relative; }
     .section-03 .section-inner, .section-07 .section-inner {padding:40px 0}
+
+    .section-03 .btn-go-all { position:absolute; top: 15px; right: 15px; }
 }
 </style>
 <?php } ?>
@@ -194,7 +197,7 @@ if (!defined('_EYOOM_')) exit;
     .doc_menu1 { width: 100%; justify-content: space-between; }
     .doc_menu2 { position:relative;  }
     .flex-c { position:absolute; left:0px;  }
-    .btn-go-category { position:absolute; right:15px;  }
+    .goods-box .btn-go-category { position:absolute; right:15px;  }
     .doc_txt2 { text-align: left;  }
     .doc_flex { width: 49%;  }
     .menu-1 { position:relative;  }
@@ -287,7 +290,8 @@ if (!defined('_EYOOM_')) exit;
             <?php echo eb_goods('1563166858'); ?>
                         <!-- 수정사항 - 스타일 추가 1009 수정 -->
             <div class="text-center">
-                <div class="btn-more btn-go-category" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="../shop/list.php?ca_id=10" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;" class='main-sec1-href'>전체보기</a></div>
+                <div class="btn-more" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="../shop/list.php?ca_id=10" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;" class='main-sec1-href'>전체보기</a>
+                </div>
             </div>
             <!-- 여기까지 -->
 
@@ -326,7 +330,7 @@ if (!defined('_EYOOM_')) exit;
             <?php echo eb_goods('1662967131'); ?>
                         <!-- 수정사항 - 스타일 추가 1009 수정 -->
             <div class="text-center">
-                <div class="btn-more btn-go-category" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/shop/list.php?ca_id=10" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;" class='main-sec2-href'>전체보기</a></div>
+                <div class="btn-more" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/shop/list.php?ca_id=10" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;" class='main-sec2-href'>전체보기</a></div>
             </div>
             <!-- 여기까지 -->
 
@@ -462,7 +466,7 @@ if (!defined('_EYOOM_')) exit;
                     <div class="index_left" style="position:relative;width: calc(100% - 398px);padding-right: 30px">
                         <div class="qna-view">
                             <div class="text-center">
-                                <div class="btn-more btn-go-category" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/bbs/qalist.php" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;">전체보기</a></div>
+                                <div class="btn-more btn-go-all" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/bbs/qalist.php" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;">전체보기</a></div>
                             </div>
                         </div>
 
@@ -510,7 +514,7 @@ if (!defined('_EYOOM_')) exit;
             <?php echo eb_latest('1564637783'); ?>
                         <!-- 수정사항 - 스타일 추가 1009 수정 -->
             <div class="text-center">
-                <div class="btn-more btn-go-category" style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/bbs/board.php?bo_table=gallery" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;">전체보기</a></div>
+                <div class="btn-more " style="background-color: #fff;border-radius: 100px !important;border: 1px solid #5b0fd1 !important;"><a href="https://www.sojjang.com/bbs/board.php?bo_table=gallery" style="color: #5b0fd1 !important;background-color: transparent !important;font-weight: bold !important;border: 0 !important;">전체보기</a></div>
             </div>
             <!-- 여기까지 -->
             </div>
