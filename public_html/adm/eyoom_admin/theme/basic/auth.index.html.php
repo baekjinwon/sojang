@@ -537,8 +537,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
                             <th colspan="1" class="text-center">오늘</th>
                             <th colspan="1" class="text-center">월</th>
                             <th colspan="1" class="text-center">전체</th>
-                        </tr>
-                        
+                        </tr>                        
                     </thead>
                     <tbody>
                     <?php 
@@ -547,7 +546,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
                     FROM g5_shop_cart d
                     WHERE ct_status = '완료' 
                     AND it_id not in('1659019167','1672642574','1672642610','1672642648')
-                    AND DATE_FORMAT(ct_time,'%Y-%m-d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
+                    AND DATE_FORMAT(ct_time,'%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
                     group by it_id
                     ";
                     $result_order_today = sql_query($sql_order_today);
@@ -571,20 +570,32 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
                     ";
 
                     $result_order = sql_query($sql_order);
-
                     
+                    $k = 0;
                     while ($row = sql_fetch_array($result_order_today)) {
-                        if($row['item_name'] && $row['item_cnt']) $row_order_today2[] = $row;
+                        if($row['item_name'] && $row['item_cnt']){
+                            $row_order_today2[$k] = $row;
+                            $k++;
+                        }
                     }
 
+                    $k = 0;
                     while ($row = sql_fetch_array($result_order_month)) {
-                        if($row['item_name'] && $row['item_cnt']) $row_order_month2[] = $row;
+                        if($row['item_name'] && $row['item_cnt']){
+                            $row_order_month2[$k] = $row;
+                            $k++;
+                        }
                     }
 
+                    $k = 0;
                     while ($row = sql_fetch_array($result_order)) {
-                        if($row['item_name'] && $row['item_cnt']) $row_order2[] = $row;
+                        if($row['item_name'] && $row['item_cnt']){
+                            $row_order2[$k] = $row;
+                            $k++;
+                        }
                     }
                     ?>
+                        <!-- <tr><td colspan='4'></td></tr> -->
                         <tr>                            
                             <td class="text-right">1</td>
                             <td class="text-right"><?php echo $row_order_today2[0]['item_name']; ?></td>

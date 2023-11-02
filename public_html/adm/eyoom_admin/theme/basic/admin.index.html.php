@@ -171,7 +171,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
             <h3><?php if ($status['count'] > 0) { ?><div class="alarm-marker"><span class="alarm-effect"></span><span class="alarm-point"></span></div><?php } ?><?php echo number_format($status['count']); ?></h3>
             <p>
                 <?php echo $key; ?> <i class="fas fa-caret-right"></i>
-                <?php if ($key == '주문') { ?>입금<?php } else if ($key == '입금') { ?>준비<?php } else if ($key == '준비') { ?>배송<?php } else if ($key == '배송') { ?>완료<?php } ?>
+                <?php if ($key == '주문') { ?>입금(완료)<?php } else if ($key == '입금') { ?>준비<?php } else if ($key == '준비') { ?>배송<?php } else if ($key == '배송') { ?>완료<?php } ?>
             </p>
         </div>
         <div class="icon">
@@ -636,7 +636,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
                             , (select it_name from g5_shop_item where it_id = d.it_id) as item_name 
                             from g5_download_logs d
                             where DATE_FORMAT(create_date , '%Y-%m-%d') = DATE_FORMAT(NOW(),'%Y-%m-%d')
-                            group by it_id
+                            group by d.it_id
                             order by item_cnt
                             limit 10";
                             $result_order_today = sql_query($sql_order_today);
@@ -646,7 +646,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
                             , (select it_name from g5_shop_item where it_id = d.it_id) as item_name 
                             from g5_download_logs d
                             where DATE_FORMAT(create_date , '%Y-%m') = DATE_FORMAT(NOW(),'%Y-%m')
-                            group by it_id
+                            group by d.it_id
                             order by item_cnt
                             limit 10";
                             $result_order_month = sql_query($sql_order_month);
@@ -655,96 +655,96 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
                             , it_id
                             , (select it_name from g5_shop_item where it_id = d.it_id) as item_name 
                             from g5_download_logs d
-                            group by it_id
+                            group by d.it_id
                             order by item_cnt
                             limit 10";
                             $result_order = sql_query($sql_order);
 
-                            
+                            $k = 0; 
                             while ($row = sql_fetch_array($result_order_today)) {
-                                $row_order_today[] = $row;
+                                if($row['item_name']){
+                                    $row_order_today[$k] = $row;
+                                    $k++;
+                                }
                             }
 
+                            $k = 0; 
                             while ($row = sql_fetch_array($result_order_month)) {
-                                $row_order_month[] = $row;
+                                if($row['item_name']){
+                                    $row_order_month[$k] = $row;
+                                    $k++;
+                                }
                             }
 
+                            $k = 0; 
                             while ($row = sql_fetch_array($result_order)) {
-                                $row_order[] = $row;
+                                if($row['item_name']){
+                                    $row_order[$k] = $row;
+                                    $k++;
+                                }
                             }
 
                        //   var_dump($row_order);
                     ?>
-                        <tr>
-                            
-                            
-                                    <td class="text-center">1</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[0]['it_id'] ?>"><?php echo $row_order_today[0]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[0]['it_id'] ?>"><?php echo $row_order_month[0]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[0]['it_id'] ?>"><?php echo $row_order[0]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">1</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[0]['it_id'] ?>"><?php echo $row_order_today[0]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[0]['it_id'] ?>"><?php echo $row_order_month[0]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[0]['it_id'] ?>"><?php echo $row_order[0]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">2</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[1]['it_id'] ?>"><?php echo $row_order_today[1]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[1]['it_id'] ?>"><?php echo $row_order_month[1]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[1]['it_id'] ?>"><?php echo $row_order[1]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">2</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[1]['it_id'] ?>"><?php echo $row_order_today[1]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[1]['it_id'] ?>"><?php echo $row_order_month[1]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[1]['it_id'] ?>"><?php echo $row_order[1]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">3</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[2]['it_id'] ?>"><?php echo $row_order_today[2]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[2]['it_id'] ?>"><?php echo $row_order_month[2]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[2]['it_id'] ?>"><?php echo $row_order[2]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">3</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[2]['it_id'] ?>"><?php echo $row_order_today[2]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[2]['it_id'] ?>"><?php echo $row_order_month[2]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[2]['it_id'] ?>"><?php echo $row_order[2]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">4</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[3]['it_id'] ?>"><?php echo $row_order_today[3]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[3]['it_id'] ?>"><?php echo $row_order_month[3]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[3]['it_id'] ?>"><?php echo $row_order[3]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">4</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[3]['it_id'] ?>"><?php echo $row_order_today[3]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[3]['it_id'] ?>"><?php echo $row_order_month[3]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[3]['it_id'] ?>"><?php echo $row_order[3]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">5</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[4]['it_id'] ?>"><?php echo $row_order_today[4]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[4]['it_id'] ?>"><?php echo $row_order_month[4]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[4]['it_id'] ?>"><?php echo $row_order[4]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">5</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[4]['it_id'] ?>"><?php echo $row_order_today[4]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[4]['it_id'] ?>"><?php echo $row_order_month[4]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[4]['it_id'] ?>"><?php echo $row_order[4]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">6</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[5]['it_id'] ?>"><?php echo $row_order_today[5]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[5]['it_id'] ?>"><?php echo $row_order_month[5]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[5]['it_id'] ?>"><?php echo $row_order[5]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">6</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[5]['it_id'] ?>"><?php echo $row_order_today[5]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[5]['it_id'] ?>"><?php echo $row_order_month[5]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[5]['it_id'] ?>"><?php echo $row_order[5]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">7</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[6]['it_id'] ?>"><?php echo $row_order_today[6]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[6]['it_id'] ?>"><?php echo $row_order_month[6]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[6]['it_id'] ?>"><?php echo $row_order[6]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">7</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[6]['it_id'] ?>"><?php echo $row_order_today[6]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[6]['it_id'] ?>"><?php echo $row_order_month[6]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[6]['it_id'] ?>"><?php echo $row_order[6]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">8</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[7]['it_id'] ?>"><?php echo $row_order_today[7]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[7]['it_id'] ?>"><?php echo $row_order_month[7]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[7]['it_id'] ?>"><?php echo $row_order[7]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">8</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[7]['it_id'] ?>"><?php echo $row_order_today[7]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[7]['it_id'] ?>"><?php echo $row_order_month[7]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[7]['it_id'] ?>"><?php echo $row_order[7]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">9</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[8]['it_id'] ?>"><?php echo $row_order_today[8]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[8]['it_id'] ?>"><?php echo $row_order_month[8]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[8]['it_id'] ?>"><?php echo $row_order[8]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">9</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[8]['it_id'] ?>"><?php echo $row_order_today[8]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[8]['it_id'] ?>"><?php echo $row_order_month[8]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[8]['it_id'] ?>"><?php echo $row_order[8]['item_name']; ?></a></td>
                         </tr>
-                        <tr>
-                            
-                                    <td class="text-center">10</td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[9]['it_id'] ?>"><?php echo $row_order_today[9]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[9]['it_id'] ?>"><?php echo $row_order_month[9]['item_name']; ?></a></td>
-                                    <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[9]['it_id'] ?>"><?php echo $row_order[9]['item_name']; ?></a></td>
+                        <tr>                            
+                            <td class="text-center">10</td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_today[9]['it_id'] ?>"><?php echo $row_order_today[9]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order_month[9]['it_id'] ?>"><?php echo $row_order_month[9]['item_name']; ?></a></td>
+                            <td class="text-center"><a href="/shop/item.php?it_id=<?php echo $row_order[9]['it_id'] ?>"><?php echo $row_order[9]['item_name']; ?></a></td>
                         </tr>
                     
                     </tbody>
@@ -820,91 +820,91 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
                             ";
                             $result_order = sql_query($sql_order);
 
-                            
+                            $k = 0;
                             while ($row = sql_fetch_array($result_order_today)) {
-                                $row_order_today2[] = $row;
+                                if($row['it_name'] && $row['item_cnt']){
+                                    $row_order_today2[$k] = $row;
+                                    $k++;
+                                }
                             }
 
+                            $k = 0;
                             while ($row = sql_fetch_array($result_order_month)) {
-                                $row_order_month2[] = $row;
+                                if($row['it_name'] && $row['item_cnt']){
+                                    $row_order_month2[$k] = $row;
+                                    $k++;
+                                }
                             }
 
+                            $k = 0;
                             while ($row = sql_fetch_array($result_order)) {
-                                $row_order2[] = $row;
+                                if($row['it_name'] && $row['item_cnt']){
+                                    $row_order2[$k] = $row;
+                                    $k++;
+                                }
                             }
-                    ?>
-                        <tr>
-                            
-                            
+                    ?>  
+                        <!-- <tr><td colspan='4'></td></tr> -->
+                        <tr>                            
                             <td class="text-center">1</td>
-                            <td class="text-center"><?php echo $row_order_today2[0]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[0]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[0]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[0]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[0]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[0]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">2</td>
-                            <td class="text-center"><?php echo $row_order_today2[1]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[1]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[1]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[1]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[1]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[1]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">3</td>
-                            <td class="text-center"><?php echo $row_order_today2[2]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[2]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[2]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[2]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[2]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[2]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">4</td>
-                            <td class="text-center"><?php echo $row_order_today2[3]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[3]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[3]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[3]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[3]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[3]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">5</td>
-                            <td class="text-center"><?php echo $row_order_today2[4]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[4]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[4]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[4]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[4]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[4]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">6</td>
-                            <td class="text-center"><?php echo $row_order_today2[5]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[5]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[5]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[5]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[5]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[5]['it_name']; ?></td>
+                        </tr>
+                        <tr>
                             <td class="text-center">7</td>
-                            <td class="text-center"><?php echo $row_order_today2[6]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[6]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[6]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[6]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[6]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[6]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">8</td>
-                            <td class="text-center"><?php echo $row_order_today2[7]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[7]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[7]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[7]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[7]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[7]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">9</td>
-                            <td class="text-center"><?php echo $row_order_today2[8]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[8]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[8]['mb_name']; ?></td>
-                </tr>
-                <tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[8]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[8]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[8]['it_name']; ?></td>
+                        </tr>
+                        <tr>                    
                             <td class="text-center">10</td>
-                            <td class="text-center"><?php echo $row_order_today2[9]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order_month2[9]['mb_name']; ?></td>
-                            <td class="text-center"><?php echo $row_order2[9]['mb_name']; ?></td>
-                </tr>
-                    
+                            <td class="text-center"><?php echo $row_order_today2[9]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order_month2[9]['it_name']; ?></td>
+                            <td class="text-center"><?php echo $row_order2[9]['it_name']; ?></td>
+                        </tr>                    
                     </tbody>
                 </table>
             </div>

@@ -5,7 +5,7 @@ if (!defined('_EYOOM_IS_ADMIN_')) exit;
  * 처리할 주문
  */
 //$od_status = array('주문', '입금', '준비', '배송');
-$od_status = array('준비', '배송');
+$od_status = array('주문');
 foreach($od_status as $status) {
     $order_status[$status] = get_order_status_sum($status);
     $order_status[$status]['href'] = G5_ADMIN_URL . "/?dir=shop&amp;pid=orderlist&amp;od_status={$status}";
