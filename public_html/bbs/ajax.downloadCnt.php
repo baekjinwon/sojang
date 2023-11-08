@@ -22,7 +22,7 @@ $checksql2 = "select count(*) as cnt from g5_download_logs where mb_id = '{$mb_i
 $checkresult2 = sql_fetch($checksql2);
 
 $chk_date = date("Y-m-d H:i");
-$is_use = sql_fetch("select * from g5_download_logs where it_id='{$it_id}' and od_id='{$od_id}' and mb_id='{$mb_id}' and create_id='{$itemresult['create_id']}' and create_date regexp $chk_date ");
+$is_use = sql_fetch("select * from g5_download_logs where it_id='{$it_id}' and od_id='{$od_id}' and mb_id='{$mb_id}' and create_id='{$itemresult['create_id']}' and create_date regexp '$chk_date' ");
 
 if($is_use['od_id']){}
 else{

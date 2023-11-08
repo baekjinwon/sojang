@@ -153,7 +153,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
 /**
  * 사용후기
  */
-$sql = " select * from {$g5['g5_shop_item_use_table']} a left join g5_shop_item b on a.it_id = b.it_id where b.create_id = '{$member['mb_id']}' order by is_id desc";
+$sql = " select * from {$g5['g5_shop_item_use_table']} a left join g5_shop_item b on a.it_id = b.it_id where b.create_id = '{$member['mb_id']}' order by is_id desc limit 5";
 $result = sql_query($sql);
 $item_use = array();
 for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -166,7 +166,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $item_use[$i]['is_answer'] = $row['is_confirm'] == '1' ? true: false;
 }
 
-$sql = " select * from {$g5['g5_shop_item_qa_table']} a left join g5_shop_item b on a.it_id = b.it_id where b.create_id = '{$member['mb_id']}' order by iq_id desc";
+$sql = " select * from {$g5['g5_shop_item_qa_table']} a left join g5_shop_item b on a.it_id = b.it_id where b.create_id = '{$member['mb_id']}' order by iq_id desc limit 5";
 $result = sql_query($sql);
 $item_qa = array();
 for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -676,7 +676,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             <div class="clearfix"></div>
         </div>
         <div class="main-latest-wrap">
-            <div class="main-latest">
+            <div class="main-latest" id='main-iq-list'>
                 <?php for ($i=0; $i<count((array)$item_qa); $i++) { ?>
                 <a href="<?php echo G5_ADMIN_URL; ?>/?dir=shop&amp;pid=itemqaform&amp;iq_id=<?php echo $item_qa[$i]['iq_id']; ?>&amp;w=u" class="main-latest-link <?php if (!$item_qa[$i]['is_answer']) { ?>main-latest-no-answer<?php } ?>">
                     <div class="main-latest-member-img">
@@ -694,11 +694,50 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
                     <span class="latest-status-indicator"></span>
                     <?php } ?>
                 </a>
-                <?php } ?>
+                <?php 
+                    $limitnum = $item_qa[$i]['iq_id'];
+                }
+                ?>
                 <?php if (count((array)$item_qa) == 0) { ?>
                 <p class="main-latest-none"><i class="fas fa-exclamation-circle"></i> 출력할 문의글이 없습니다.</p>
                 <?php } ?>
+
+                <input type='hidden' name='next_iq_limit' id="next_iq_limit" value='<?=$limitnum?>'>
             </div>
+
+            <div class='' style='width: 100%; text-align:center; margin-top: 10px;'>
+                <a href="javascript:void(0);" id='btn_iq_more' class="btn-e btn-e-md btn-e-brd btn-e-default">더보기</a>
+            </div>
+
+            <script>
+            $(function(){
+                $('#btn_iq_more').click(function(){
+                    var iq_id = $('#next_iq_limit').val();
+                    var grid = 3;
+
+                    $.ajax({
+                        url : "../shop/ajax_mypage_iqadd.php",
+                        type : "POST",
+                        data : "iq_id="+iq_id,
+                        dataType: 'json',
+                        success : function(data){
+
+                            if(data){
+                                $('#main-iq-list').append(data.html);
+                                $('#next_iq_limit').val(data.next_iq_limit);
+                            }
+                            else{
+                                alert("더 이상 상품문의가 없습니다.");
+                                return false;
+                            }                        
+
+                        }, error:function(request,status,error){
+                            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                           }
+                    });
+                });
+            })
+            </script>
         </div>
         <?php /* 상품문의 끝 */?>
     </div>
@@ -712,7 +751,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             <div class="clearfix"></div>
         </div>
         <div class="main-latest-wrap">
-            <div class="main-latest">
+            <div class="main-latest" id='main-use-list'>
                 <?php for ($i=0; $i<count((array)$item_use); $i++) { ?>
                 <a href="<?php echo G5_ADMIN_URL; ?>/?dir=shop&amp;pid=itemuseform&amp;is_id=<?php echo $item_use[$i]['is_id']; ?>&amp;w=u" class="main-latest-link <?php if (!$item_use[$i]['is_answer']) { ?>main-latest-no-answer<?php } ?>">
                     <div class="main-latest-member-img">
@@ -730,29 +769,54 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
                     <span class="latest-status-indicator"></span>
                     <?php } ?>
                 </a>
-                <?php } ?>
+                <?php
+                    $limitnum = $item_use[$i]['is_id'];
+                }
+                ?>
                 <?php if (count((array)$item_use) == 0) { ?>
                 <p class="main-latest-none"><i class="fas fa-exclamation-circle"></i> 출력할 후기글이 없습니다.</p>
                 <?php } ?>
+                <input type='hidden' name='next_use_limit' id="next_use_limit" value='<?=$limitnum?>'>
             </div>
         </div>
+
+        <div class='' style='width: 100%; text-align:center; margin-top: 10px;'>
+            <a href="javascript:void(0);" id='btn_use_more' class="btn-e btn-e-md btn-e-brd btn-e-default">더보기</a>
+        </div>
+
+        <script>
+        $(function(){
+            $('#btn_use_more').click(function(){
+                var is_id = $('#next_use_limit').val();
+                
+                $.ajax({
+                    url : "../shop/ajax_mypage_useadd.php",
+                    type : "POST",
+                    data : "is_id="+is_id,
+                    dataType: 'json',
+                    success : function(data){
+                        if(data){
+                            $('#main-use-list').append(data.html);
+                            $('#next_use_limit').val(data.next_is_limit);
+                        }
+                        else{
+                            alert("더 이상 사용후기가 없습니다.");
+                            return false;
+                        }                        
+
+                    }, error:function(request,status,error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                       }
+                });
+            });
+        })
+        </script>
         <?php /* 사용후기 끝 */?>
     </div>
 </div>
 <div class="margin-bottom-30"></div>
 
-
-
-
 <?php } ?>
-
-
-
-
-
-
-
-
 
 
 <script type="text/javascript" src="<?php echo EYOOM_ADMIN_THEME_URL; ?>/plugins/d3/d3.min.js"></script>

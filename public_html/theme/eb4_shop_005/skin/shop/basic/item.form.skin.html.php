@@ -345,7 +345,8 @@ $current_date_dl = new DateTime(date('Y-m-d'));
                
 
                 <?php /* 총 구매액 */ 
-                    if($start_date_dl > $current_date_dl || $end_date_dl < $current_date_dl || $is_member == false){
+
+                if($start_date_dl > $current_date_dl || $end_date_dl < $current_date_dl || $is_member == false){
                 ?>
                   <div id="sit_tot_price"></div>
                 <?php } ?>
@@ -355,53 +356,59 @@ $current_date_dl = new DateTime(date('Y-m-d'));
                 <p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
                 <?php } ?>
                 <div id="sit_ov_btn">
-                <?php if ($is_orderable) { ?>
-                        <?php
-                               
-                                
-                                if(( $end_date_dl < $current_date_dl || $is_member == false || ($it['it_id'] == '1659019167' || $it['it_id'] == '1672642574' || $it['it_id'] == "1672642610" || $it['it_id'] == "1672642648"  )) && $is_admin != 'super' ){
-                            ?>
-                            
-                                    <?php if($it['it_file_1']) { ?>
-                                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/hwp.png" style="width:25px" /> 한글</a>
-                                        <?php } ?>
-                                        <?php if($it['it_file_2']) { ?>
-                                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/wd.png" style="width:25px" /> 워드</a>
-                                        <?php } ?>
-                                        <?php if($it['it_file_3']) { ?>
-                                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/pp.png" style="width:25px" /> PDF</a>
-                                        <?php } ?>
-                            
-                                
-                            <?php }else{ ?>
+                
+                <?php 
+                if ($is_orderable) {
+                    if(( $end_date_dl < $current_date_dl || $is_member == false || ($it['it_id'] == '1659019167' || $it['it_id'] == '1672642574' || $it['it_id'] == "1672642610" || $it['it_id'] == "1672642648"  )) && $is_admin != 'super' ){
+                        ?>
 
+                            <?php if($it['it_file_1']) { ?>
+                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/hwp.png" style="width:25px" /> 한글</a>
+                            <?php } ?>
+
+                            <?php if($it['it_file_2']) { ?>
+                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/wd.png" style="width:25px" /> 워드</a>
+                            <?php } ?>
+
+                            <?php if($it['it_file_3']) { ?>
+                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/pp.png" style="width:25px" /> PDF</a>
+                            <?php } ?>
+                        <?php }else{ ?>
+                            <?php 
+                            $checksql2 = "select count(*) as cnt from g5_download_logs where mb_id = '{$member['mb_id']}' and it_id = '{$it['it_id']}' and od_id = 'prime'";
+                            $checkresult2 = sql_fetch($checksql2);
+                            if($checkresult2['cnt'] != "0") {
+                            ?>
+                            <?php if($it['it_file_1']) { ?>
+                                <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_1']; ?>" download><img src="/img/hwp.png" style="width:25px" /> 한글</a>
+                            <?php } ?>
+
+                            <?php if($it['it_file_2']) { ?>
+                                <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_2']; ?>" download><img src="/img/wd.png" style="width:25px" /> 워드</a>
+                            <?php } ?>
+
+                            <?php if($it['it_file_3']) { ?>
+                                <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 180px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_3']; ?>" download><img src="/img/pp.png" style="width:25px" /> PDF</a>
+                            <?php
+                            }
+                        }else{
+                            if($member['free_count'] <= 0) {
+                                if($it['it_file_1']) {
+                                ?>
+                                    <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/hwp.png" style="width:25px" /> 한글</a>
+                                <?php
+                                }
+                                
+                                if($it['it_file_2']) {
+                                ?>
+                                    <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/wd.png" style="width:25px" /> 워드</a>
                                 <?php 
-                                   $checksql2 = "select count(*) as cnt from g5_download_logs where mb_id = '{$member['mb_id']}' and it_id = '{$it['it_id']}' and od_id = 'prime'";
-                                   $checkresult2 = sql_fetch($checksql2);
-                                    if($checkresult2['cnt'] != "0") {
-                                    ?>
-                                        <?php if($it['it_file_1']) { ?>
-                                            <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_1']; ?>" download><img src="/img/hwp.png" style="width:25px" /> 한글</a>
-                                        <?php } ?>
-                                        <?php if($it['it_file_2']) { ?>
-                                            <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_2']; ?>" download><img src="/img/wd.png" style="width:25px" /> 워드</a>
-                                        <?php } ?>
-                                        <?php if($it['it_file_3']) { ?>
-                                            <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 180px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_3']; ?>" download><img src="/img/pp.png" style="width:25px" /> PDF</a>
-                                        <?php } ?>
-                                <?php }else{ ?>
-                                    <?php if($member['free_count'] <= 0) { ?>
-                                        <?php if($it['it_file_1']) { ?>
-                                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/hwp.png" style="width:25px" /> 한글</a>
-                                        <?php } ?>
-                                        <?php if($it['it_file_2']) { ?>
-                                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/wd.png" style="width:25px" /> 워드</a>
-                                        <?php } ?>
-                                        <?php if($it['it_file_3']) { ?>
-                                            <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/pp.png" style="width:25px" /> PDF</a>
-                                        <?php } ?>
-                                    
-                                    <?php }else{?>
+                                }
+
+                                if($it['it_file_3']) { ?>
+                                    <a  style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" ><img src="/img/pp.png" style="width:25px" /> PDF</a>
+                                <?php } ?>
+                            <?php }else{?>
                                         <?php if($it['it_file_1']) { ?>
                                             <a onclick="downloadCount('<?php echo $it['it_id'] ?>','prime')" style="line-height:2;background: #FF4848;color: #fff;border: 0;width: 100px;float: left;margin-right: 5px;height: 50px;margin-bottom: 10px;font-weight: bold;font-size: 16px !important;" class="btn-e btn-e-lg btn-e-dark" href="<?php echo G5_URL."/data/item/".$it['it_id']."/".$it['it_file_1']; ?>" download><img src="/img/hwp.png" style="width:25px" /> 한글</a>
                                         <?php } ?>
@@ -423,45 +430,31 @@ $current_date_dl = new DateTime(date('Y-m-d'));
                 <div id="sit_ov_btn">
                     <?php if ($is_orderable) { ?>
                         <?php
-                               
-                                
-                                if(( $end_date_dl < $current_date_dl || $is_member == false || ($it['it_id'] == '1659019167' || $it['it_id'] == '1672642574' || $it['it_id'] == "1672642610" || $it['it_id'] == "1672642648" )) && $is_admin != 'super' ){
+                        if(( $end_date_dl < $current_date_dl || $is_member == false || ($it['it_id'] == '1659019167' || $it['it_id'] == '1672642574' || $it['it_id'] == "1672642610" || $it['it_id'] == "1672642648" )) && $is_admin != 'super' ){
+                        ?>
+                            <button type="submit" onclick="document.pressed=this.value;" value="결제하기" id="sit_btn_buy"><i class="fas fa-credit-card" aria-hidden="true"></i> 결제하기</button>
+                            <button style="display:none" type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> 장바구니</button>
+                        <?php }else{ ?>
+                            <?php 
+                            $checksql2 = "select count(*) as cnt from g5_download_logs where mb_id = '{$member['mb_id']}' and it_id = '{$it['it_id']}' and od_id = 'prime'";
+                            $checkresult2 = sql_fetch($checksql2);
+
+                            if($checkresult2['cnt'] != "0") {                           
+                            }else{
+                                if($member['free_count'] <= 0) {
+                                    if($it['it_id'] != '1659019167' && $it['it_id'] != '1672642574' && $it['it_id'] != "1672642610" && $it['it_id'] != "1672642648"  ) { 
                             ?>
-                            
-                      
-                                <button type="submit" onclick="document.pressed=this.value;" value="결제하기" id="sit_btn_buy"><i class="fas fa-credit-card" aria-hidden="true"></i> 결제하기</button>
-                                <button style="display:none" type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> 장바구니</button>
-                          
-                                
-                            <?php }else{ ?>
-
-                                <?php 
-                                   $checksql2 = "select count(*) as cnt from g5_download_logs where mb_id = '{$member['mb_id']}' and it_id = '{$it['it_id']}' and od_id = 'prime'";
-                                   $checkresult2 = sql_fetch($checksql2);
-                                    if($checkresult2['cnt'] != "0") {
-                                    ?>
-                           
-                                <?php }else{ ?>
-                                    <?php if($member['free_count'] <= 0) { ?>
-                                       
-                                        <?php if($it['it_id'] != '1659019167' && $it['it_id'] != '1672642574' && $it['it_id'] != "1672642610" && $it['it_id'] != "1672642648"  ) { ?>
-                                            <button type="submit" onclick="document.pressed=this.value;" value="결제하기" id="sit_btn_buy"><i class="fas fa-credit-card" aria-hidden="true"></i> 바로결제</button>
-                                            <button type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> 장바구니</button>
-                                            
-                                        <?php }else{ ?>
-                                            <button type="submit" onclick="document.pressed=this.value;" value="결제하기" id="sit_btn_buy"><i class="fas fa-credit-card" aria-hidden="true"></i> 결제하기</button>
-                                            
-                                        <?php } ?>
-                                    <?php }else{?>
-                                      
-                                    <?php }?>
-                                <?php } ?>
-                                
-                                
-                            <?php } ?>
-
-                        
-                    <?php } ?>
+                                        <button type="submit" onclick="document.pressed=this.value;" value="결제하기" id="sit_btn_buy"><i class="fas fa-credit-card" aria-hidden="true"></i> 바로결제</button>
+                                        <button type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"><i class="fas fa-cart-arrow-down" aria-hidden="true"></i> 장바구니</button>
+                                    <?php }else{ ?>
+                                        <button type="submit" onclick="document.pressed=this.value;" value="결제하기" id="sit_btn_buy"><i class="fas fa-credit-card" aria-hidden="true"></i> 결제하기</button>
+                                    <?php } ?>
+                                <?php
+                                }else{}
+                            }
+                        }
+                    }
+                    ?>
                     <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
                     <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_alm"><i class="far fa-bell" aria-hidden="true"></i> 재입고알림</a>
                     <?php } ?>

@@ -58,29 +58,33 @@ $result = sql_query($sql);
 //$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 $qstr .= '&amp;fr_date='.$fr_date.'&amp;to_date='.$to_date;
 $list = array();
+$number = 0;
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $it = sql_fetch("select it_name, it_id from g5_shop_item where it_id='".$row['it_id']."'");
     $chk = sql_fetch("select od_time, od_receipt_time, od_cart_price, od_receipt_price, od_status from g5_shop_order where od_id='".$row['od_id']."' order by od_id desc ");
-        
+    
+    if(!$it['it_name']) continue;    
     if($row['od_id'] == 'prime') continue;
 
     $href = shop_item_url($row['it_id']);
     $num = $rank + $i + 1;
 
-    $list[$i] = $row;
+    $list[$number] = $row;
 
-    $list[$i]['it_name'] = preg_replace('/\r\n|\r|\n/', '', $it['it_name']);
-    $list[$i]['num'] = $num;
-    $list[$i]['href'] = $href;
-    $list[$i]['image'] = str_replace('"', "'", get_it_image($it['it_id'], 160, 160) );
-
-    $list[$i]['od_time'] = $chk['od_time'];
-    $list[$i]['od_receipt_time'] = $chk['od_receipt_time'];
-    $list[$i]['od_cart_price'] = $chk['od_cart_price'];
-    $list[$i]['od_receipt_price'] = $chk['od_receipt_price'];
-    $list[$i]['od_status'] = $chk['od_status'];
+    $list[$number]['it_name'] = preg_replace('/\r\n|\r|\n/', '', $it['it_name']);
+    $list[$number]['num'] = $num;
+    $list[$number]['href'] = $href;
+    $list[$number]['image'] = str_replace('"', "'", get_it_image($it['it_id'], 160, 160) );
+    $list[$number]['od_time'] = $chk['od_time'];
+    //$list[$i]['query'] = "select it_name, it_id from g5_shop_item where it_id='".$row['it_id']."'";
+    $list[$number]['od_receipt_time'] = $chk['od_receipt_time'];
+    $list[$number]['od_cart_price'] = $chk['od_cart_price'];
+    $list[$number]['od_receipt_price'] = $chk['od_receipt_price'];
+    $list[$number]['od_status'] = $chk['od_status'];
+    $number++;
 }
+
 //print_r2($list);
 /**
  * 페이징

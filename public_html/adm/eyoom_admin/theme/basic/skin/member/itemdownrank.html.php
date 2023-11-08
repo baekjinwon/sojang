@@ -204,7 +204,7 @@ $(document).ready(function() {
             { name: "구매완료일시", type: "text", width: 60 },
             { name: "주문금액", type: "text", width: 60 },
             { name: "입금액", type: "text", width: 60 },
-            { name: "상태", type: "ㅅㄷㅌㅅ", width: 60 },
+            { name: "상태", type: "text", width: 60 },
         ]
     })
     $("#sort").click(function() {
