@@ -21,6 +21,10 @@ body{position: relative;}
     <a href="javascript:tabchange(2)" id="tabbtn2" style="width: 31.333%;border-radius: 5px !important;align-items: center;justify-content: center;display: flex;height: 40px;border: 1px solid #999;color: #999;margin-right: 3%;" class="tabbtn">서비스 이용약관</a>
     <a href="javascript:tabchange(3)" id="tabbtn3" style="width: 31.333%;border-radius: 5px !important;align-items: center;justify-content: center;display: flex;height: 40px;border: 1px solid #999;color: #999;" class="tabbtn">자료등록 서약서</a>
 </div>
+<style>
+.tab-2 { display:none; }
+.tab-3 { display:none; }
+</style>
 <script>
 	function tabchange(key){
 		$(".tabbtn").removeClass("active");

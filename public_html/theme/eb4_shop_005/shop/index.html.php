@@ -215,6 +215,7 @@ if (!defined('_EYOOM_')) exit;
         flex-wrap: wrap;
     }
 }
+.ebgoods-gallery.row { display:flex; flex-wrap:wrap;  }
 </style>
 <!-- 법률서식 -->
 <?php if($is_mobile){ ?>
