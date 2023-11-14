@@ -23,6 +23,7 @@ $sql  = " select a.it_id,a.od_id,
                  SUM(ct_qty) as ct_status_sum
             from {$g5['g5_shop_cart_table']} a, {$g5['g5_shop_item_table']} b ";
 $sql .= " where a.it_id = b.it_id ";
+$sql .= " and (b.it_id != '1659019167' and b.it_id != '1672642574') ";
 
 if ($stx != "") {
     if ($sfl != "") {

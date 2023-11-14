@@ -78,14 +78,12 @@ if (!defined('_EYOOM_')) exit;
                     <td class="text-right"><?php echo display_price($list[$i]['od_receipt_price']); ?></td>
                     <!--<td class="td-border text-right"><?php echo display_price($list[$i]['od_misu']); ?></td> 박찬영 수정 -->
                     <td class="text-center">
-                        <?php
-
+                        <?php                        
                         if($ct_item_result['it_id'] != "1659019167" && $ct_item_result['it_id'] != "1672642574" && $ct_item_result['it_id'] != "1672642610" && $ct_item_result['it_id'] != "1672642648"){
 
                             if($list[$i]['od_status'] == "배송완료" || $list[$i]['od_status'] == "완료") {
                                 
-                                if(4 > $days){
-                                    
+                                if($days > 4){                                    
                                     echo "<a style='color:white' class='btn-e btn-e-lg btn-e-dark' href='".$list[$i]['href']."'>다운받기</a>";
                                 }else {
                                     if($list[$i]['od_status'] == "취소") echo "주문취소";
@@ -110,9 +108,9 @@ if (!defined('_EYOOM_')) exit;
                             }
                             echo "</span>";
 
-                            if($list[$i]['od_status'] == "취소"){
-                                echo "(주문취소)";
-                            }
+                            // if($list[$i]['od_status'] == "취소"){
+                            //     echo "(주문취소)";
+                            // }
                             
                         }
                         ?>                        

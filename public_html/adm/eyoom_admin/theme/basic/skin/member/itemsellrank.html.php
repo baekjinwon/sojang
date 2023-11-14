@@ -269,7 +269,7 @@ function set_date(today) {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME - 86400); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME - 86400); ?>";
     } else if (today == "이번주") {
-        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('-'.($date_term + 6).' days', G5_SERVER_TIME)); ?>";
+        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('-'.($date_term).' days', G5_SERVER_TIME)); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME); ?>";
     } else if (today == "이번달") {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', G5_SERVER_TIME); ?>";

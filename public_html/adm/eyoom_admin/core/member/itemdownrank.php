@@ -14,7 +14,6 @@ $to_date = (isset($_GET['to_date']) && preg_match("/[0-9]/", $_GET['to_date'])) 
 $sql  = " select *, count(it_id) as cnt
             from g5_download_logs ";
 $sql .= " where (1) ";
-$sql .= " group by it_id ";
 
 if ($stx != "") {
     if ($sfl != "") {
@@ -30,9 +29,10 @@ if ($fr_date && $to_date)
 {
     $fr = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
     $to = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
-    $sql .= " and a.ct_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
+    $sql .= " and create_date between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
 }
 
+$sql .= " group by it_id ";
 
 if (!$sst) {
     $sst  = "cnt";
@@ -41,6 +41,7 @@ if (!$sst) {
 $sql_order = "order by $sst $sod";
 
 $sql .= " $sql_order ";
+//die($sql);
 
 $result = sql_query($sql);
 $total_count = sql_num_rows($result);
