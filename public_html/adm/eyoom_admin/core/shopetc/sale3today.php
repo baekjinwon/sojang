@@ -137,22 +137,22 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $list[$num]['normalcnt'] = $ncnt['cnt'];
         $list[$num]['po_point'] = $po['po_point'];
         
-
-        $tot['orderprice']    += $row['orderprice'];
-        $tot['ordercancel']   += $row['od_cancel_price'];
-        $tot['coupon']        += $row['couponprice'];
         $tot['primecnt']      += $pcnt['cnt'];
         $tot['normalcnt']     += $ncnt['cnt'];
-        $tot['po_point']      += $po['po_point'];
-        $tot['receipt_bank']  += $receipt_bank;
-        $tot['receipt_vbank'] += $receipt_vbank;
-        $tot['receipt_iche']  += $receipt_iche;
-        $tot['receipt_card']  += $receipt_card;
-        $tot['receipt_easy']  += $receipt_easy;
-        $tot['receipt_hp']    += $receipt_hp;
-        $tot['receipt_point'] += $row['od_receipt_point'];
-        $tot['misu']          += $row['od_misu'];
-
         $num++;
     }
+
+    $tot['orderprice']    += $row['orderprice'];
+    $tot['ordercancel']   += $row['od_cancel_price'];
+    $tot['coupon']        += $row['couponprice'];
+    
+    $tot['po_point']      += $po['po_point'];
+    $tot['receipt_bank']  += $receipt_bank;
+    $tot['receipt_vbank'] += $receipt_vbank;
+    $tot['receipt_iche']  += $receipt_iche;
+    $tot['receipt_card']  += $receipt_card;
+    $tot['receipt_easy']  += $receipt_easy;
+    $tot['receipt_hp']    += $receipt_hp;
+    $tot['receipt_point'] += $row['od_receipt_point'];
+    $tot['misu']          += $row['od_misu'];
 }

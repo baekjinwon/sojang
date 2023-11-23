@@ -1,7 +1,7 @@
 <?php
 /**
  * Eyoom Admin Skin File
- * @file    ~/theme/basic/skin/shopetc/sale1date.html.php
+ * @file    ~/theme/basic/skin/shopetc/sale1year.html.php
  */
 if (!defined('_EYOOM_IS_ADMIN_')) exit;
 
@@ -10,25 +10,25 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
 ?>
 
 <style>
-#admin-shop-sale1date .total-row {font-weight:bold;background:#FFF3E0}
+#admin-shop-sale1year .total-row {font-weight:bold;background:#FFF3E0}
 </style>
 
-<div class="admin-shop-sale1date">
+<div class="admin-shop-sale1year">
     <div class="adm-headline">
-        <h3><?php echo $fr_date; ?> ~ <?php echo $to_date; ?> 일간 정산현황  <button class="btn-e btn-e-dark" onclick="download()">다운로드</button></h3>
+        <h3><?php echo $fr_year; ?> ~ <?php echo $to_year; ?> 연간 정산현황 <button class="btn-e btn-e-dark" onclick="download()">다운로드</button></h3>
     </div>
     <script>
         
         function download(){
             
-            location.href = "/shop/ajax.sale3datedownload.php?fr_date=<?php echo isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['fr_date']) : ''; ?>&to_date=<?php echo isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['to_date']) : ''; ?>"
+            location.href = "/shop/ajax.sale3yeardownload.php?fr_year=<?php echo isset($_REQUEST['fr_year']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['fr_year']) : ''; ?>&to_year=<?php echo isset($_REQUEST['to_year']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['to_year']) : ''; ?>"
         }
         </script>
     <?php if(G5_IS_MOBILE) { ?>
     <p class="font-size-11 color-grey text-right margin-bottom-5"><i class="fas fa-info-circle"></i> Note! 좌우스크롤 가능 (<i class="fas fa-arrows-alt-h"></i>)</p>
     <?php } ?>
 
-    <div id="admin-shop-sale1date"></div>
+    <div id="admin-shop-sale1year"></div>
 </div>
 
 <script src="<?php echo EYOOM_ADMIN_THEME_URL; ?>/plugins/jsgrid/jsgrid.min.js"></script>
@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
         <?php
         foreach($list as $key => $val){ ?>
         {
-            주문일시: "<?php echo $key; ?>",
+            주문년도: "<?php echo $key; ?>",
             실제판매건수: "<?php echo number_format($list[$key]['normalcnt']); ?>",
             다운로드건수: "<?php echo number_format($list[$key]['downcnt']); ?>",
             다운로드취소건수 : 0,
@@ -78,7 +78,7 @@ add_stylesheet('<link rel="stylesheet" href="'.EYOOM_ADMIN_THEME_URL.'/plugins/j
 }();
 
 $(document).ready(function(){
-    $("#admin-shop-sale1date").jsGrid({
+    $("#admin-shop-sale1year").jsGrid({
         filtering      : false,
         editing        : false,
         sorting        : false,
@@ -93,7 +93,7 @@ $(document).ready(function(){
         onRefreshed: function(args) {
             var items = args.grid.option("data");
             var total = {
-                "주문일시": "합계",
+                "주문년도": "합계",
                 "다운로드취소건수": "0",
                 "실제판매건수": "<?php echo number_format($tot['normalcnt']); ?>",
                 "다운로드건수": "<?php echo number_format($tot['downcnt']); ?>",
@@ -117,7 +117,7 @@ $(document).ready(function(){
             args.grid._content.append($totalRow);
         },
         fields         : [
-            { name: "주문일시", type: "text", align: "center",},
+            { name: "주문년도", type: "text", align: "center",},
             { name: "다운로드건수", type: "text", align: "center",  },
             { name: "다운로드취소건수", type: "text", align: "center", },
             { name: "실제판매건수", type: "number", },
@@ -133,7 +133,6 @@ $(document).ready(function(){
             { name: "포인트입금", type: "number", },
             { name: "주문취소", type: "number", },
             { name: "미수금", type: "number", }, 박찬영 수정 */
-            
           
         ]
     });
