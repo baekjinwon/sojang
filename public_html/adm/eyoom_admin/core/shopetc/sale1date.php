@@ -73,7 +73,6 @@ function get_sale_info($row_array) {
         $save['misu']          += $row['od_misu'];
 
         $save['primecnt']          = $row['primecnt'];
-        if()
         $save['normalcnt']          = $row['normalcnt'];
 
         $tot['ordercount']++;

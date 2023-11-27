@@ -418,8 +418,20 @@ else if ($od_settle_case == "신용카드")
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    if($od_misu == 0)
+    if($od_misu == 0){
         $od_status      = '완료'; //$od_status      = '입금';
+
+        $sql2 = " select it_id from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_status = '완료' group by it_id ";
+        $result2 = sql_query($sql2);
+        
+        for ($k=0; $row2=sql_fetch_array($result2); $k++) {
+            $sql3 = " select sum(ct_qty) as sum_qty from {$g5['g5_shop_cart_table']} where it_id = '{$row2['it_id']}' and ct_status = '완료' ";
+            $row3 = sql_fetch($sql3);
+
+            $sql4 = " update {$g5['g5_shop_item_table']} set it_sum_qty = '{$row3['sum_qty']}' where it_id = '{$row2['it_id']}' ";
+            sql_query($sql4);
+        }
+    }
 }
 else if ($od_settle_case == "간편결제" || (($od_settle_case == "lpay" || $od_settle_case == "inicis_kakaopay") && $default['de_pg_service'] === 'inicis') )
 {
